@@ -252,9 +252,12 @@ main p {
     color: var(--muted);
 }
 
+.projects-page li em {
+    font-style: normal;
+}
+
 .projects-page li::first-line {
     color: var(--ink);
-    font-weight: 700;
 }
 
 .categories-page li {
