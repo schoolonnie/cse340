@@ -54,3 +54,52 @@ FROM (VALUES
     ('UnityServe Volunteers', 'Community Health Fair', 'Help local providers welcome visitors and organize health information booths.', 'Madison County Fairgrounds', DATE '2027-02-20')
 ) AS project_data(organization_name, title, description, location, project_date)
 JOIN organization ON organization.name = project_data.organization_name;
+
+-- ========================================
+-- Service Project Category Tables
+-- ========================================
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE project_category (
+    project_id INTEGER NOT NULL REFERENCES project(project_id) ON DELETE CASCADE,
+    category_id INTEGER NOT NULL REFERENCES category(category_id) ON DELETE CASCADE,
+    PRIMARY KEY (project_id, category_id)
+);
+
+-- ========================================
+-- Insert sample data: Categories
+-- ========================================
+INSERT INTO category (name)
+VALUES
+    ('Community Improvement'),
+    ('Food & Sustainability'),
+    ('Education & Outreach'),
+    ('Health & Support');
+
+-- ========================================
+-- Associate each service project with a category
+-- ========================================
+INSERT INTO project_category (project_id, category_id)
+SELECT project.project_id, category.category_id
+FROM (VALUES
+    ('Neighborhood Park Renewal', 'Community Improvement'),
+    ('Accessible Community Garden', 'Community Improvement'),
+    ('Warm Homes Weatherization', 'Community Improvement'),
+    ('Little Library Build', 'Community Improvement'),
+    ('Community Center Refresh', 'Community Improvement'),
+    ('Winter Seedling Workshop', 'Food & Sustainability'),
+    ('Community Compost Day', 'Food & Sustainability'),
+    ('Food Pantry Harvest', 'Food & Sustainability'),
+    ('School Garden Planning', 'Education & Outreach'),
+    ('Spring Garden Workday', 'Food & Sustainability'),
+    ('Senior Home Visit Day', 'Health & Support'),
+    ('Winter Clothing Sort', 'Health & Support'),
+    ('Holiday Meal Delivery', 'Health & Support'),
+    ('Youth Reading Partners', 'Education & Outreach'),
+    ('Community Health Fair', 'Health & Support')
+) AS project_category_data(project_title, category_name)
+JOIN project ON project.title = project_category_data.project_title
+JOIN category ON category.name = project_category_data.category_name;
