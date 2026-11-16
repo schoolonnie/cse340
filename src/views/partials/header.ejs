@@ -22,3 +22,12 @@
             </ul>
         </nav>
     </header>
+
+    <% const messages = typeof flash === 'function' ? flash() : { success: [], error: [], warning: [], info: [] }; %>
+    <% Object.keys(messages).forEach(type => { %>
+        <% if (messages[type] && messages[type].length > 0) { %>
+            <% messages[type].forEach(msg => { %>
+                <%= msg %>
+            <% }); %>
+        <% } %>
+    <% }); %>
