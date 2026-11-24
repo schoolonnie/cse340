@@ -2,6 +2,14 @@
 <main>
     <h1><%= title %></h1>
 
+  <% if (typeof errors !== 'undefined' && errors.length) { %>
+    <div class="error-list">
+      <% errors.forEach(error => { %>
+        <p><%= error.msg %></p>
+      <% }); %>
+    </div>
+  <% } %>
+
  <form action="/new-project" method="POST">
     <div class="form-group">
       <label for="title">Project Title</label>
