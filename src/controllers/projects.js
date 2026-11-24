@@ -69,8 +69,6 @@ const processNewProjectForm = async (req, res) => {
             ? [req.body.categoryId]
             : [];
 
-    await Promise.all(projectValidation.map((validation) => validation.run(req)));
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const organizations = await getAllOrganizations();
@@ -128,8 +126,6 @@ const processEditProjectForm = async (req, res) => {
         : req.body.categoryId
             ? [req.body.categoryId]
             : [];
-
-    await Promise.all(projectValidation.map((validation) => validation.run(req)));
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
