@@ -18,7 +18,8 @@
     <% } else { %>
         <p>No categories assigned.</p>
     <% } %>
-
-    <p><a href="/edit-project/<%= project.project_id %>">Edit Project</a></p>
+    <% if (user && user.role_name === 'admin') { %>
+        <p><a href="/edit-project/<%= project.project_id %>">Edit Project</a></p>
+    <% } %>
 </main>
 <%- include('partials/footer') %>

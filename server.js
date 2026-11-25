@@ -1,11 +1,11 @@
 import 'dotenv/config';
-import { fileURLToPath } from 'url';
-import path from 'path';
 import express from 'express';
-import router from './src/routes.js';
 import session from 'express-session';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import flash from './src/middleware/flash.js';
 import { testConnection } from './src/models/db.js';
+import router from './src/routes.js';
 
 
 // Define the application environment
@@ -58,6 +58,13 @@ app.use((req, res, next) => {
 
 // Middleware to make NODE_ENV available to all templates
 app.use((req, res, next) => {
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
+
+    res.locals.user = req.session.user || null;
+
     res.locals.NODE_ENV = NODE_ENV;
     next();
 });
