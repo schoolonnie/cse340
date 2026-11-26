@@ -132,3 +132,19 @@ CREATE TABLE users (
     role_id INTEGER REFERENCES roles(role_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ========================================
+-- Dedicated admin testing account
+-- ========================================
+INSERT INTO users (name, email, password_hash, role_id)
+VALUES (
+    'Admin',
+    'admin@example.com',
+    '$2b$10$b1f03QV7wsiZW0YV873NGOzFJFJU3PC01O0RmWG5kODoYTOXA/WQm',
+    (SELECT role_id FROM roles WHERE role_name = 'admin')
+)
+ON CONFLICT (email) DO UPDATE
+SET
+    name = EXCLUDED.name,
+    password_hash = EXCLUDED.password_hash,
+    role_id = EXCLUDED.role_id;

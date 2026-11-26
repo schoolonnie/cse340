@@ -178,6 +178,25 @@ main h2 {
     font-size: clamp(1.55rem, 3vw, 2rem);
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background: var(--white);
+}
+
+th,
+td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+}
+
+th {
+    background: var(--forest);
+    color: var(--white);
+}
+
 main p {
     max-width: 68ch;
     margin: 0 0 1.25rem;
